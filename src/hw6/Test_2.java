@@ -3,10 +3,17 @@ package hw6;
 class Bank {
 	private int balance = 1000;
 	public void oneqTrade()
-	{
-		tradeWithA();
-		tradeWithB();
-		tradeWithC();
+	{	
+		try {
+			tradeWithA();
+			tradeWithB();
+			tradeWithC();
+		} catch (Exception e) {
+			cancelA();
+			cancelB();
+			cancelC();
+			//e.printStackTrace();
+		}
 		System.out.println("잔여 금액 : " + balance); // 에러 발생시 잔여금액은 처음 금액과 같게 하고 싶다.
 	}
 	
@@ -20,6 +27,7 @@ class Bank {
 			cancelA();
 		}	
 	}
+	
 	public void tradeWithB() {
 		int m = 200;
 		try {
@@ -30,22 +38,14 @@ class Bank {
 			cancelB();
 		}
 	}
-	public void tradeWithC() {
+	public void tradeWithC() throws Exception{
 		int m = 300;
-		try {
+		
 			System.out.println("C 계좌에서 출금 - " + m);
 			balance -= m;
 			Exception ex = new Exception();
 			throw ex;
-		} catch(Exception e) 
-		{
-            System.out.println("C계좌 거래 에러 발생");
-			cancelC();
-			if(balance!=1000)
-			{
-				balance=1000;				
-			}
-		}
+		
 	}
         public void cancelA() {
 		System.out.println("A 계좌 거래 취소  ");
